@@ -7,9 +7,9 @@ import com.example.bytecode.SpringBootJWT.entities.Account;
 import com.example.bytecode.SpringBootJWT.entities.Operation;
 import com.example.bytecode.SpringBootJWT.entities.User;
 import com.example.bytecode.SpringBootJWT.utils.EncryptionUtils;
-import org.jasypt.salt.FixedStringSaltGenerator;
+import com.example.bytecode.SpringBootJWT.utils.ReflectionTestClass;
+import com.example.bytecode.SpringBootJWT.utils.ReflectionUtils;
 import org.jasypt.util.text.BasicTextEncryptor;
-import org.jasypt.util.text.TextEncryptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,6 +81,14 @@ public class SpringBootJwtApplication implements CommandLineRunner {
 		operationDao.save(new Operation("3461",new Date(),"Bonifico bancario", 100.00, "cn4563df3","cn2874da2"));
 		operationDao.save(new Operation("3462",new Date(),"Bonifico bancario", 100.00, "cn4563df3","cn4563df3"));
 
+		ReflectionTestClass myinstance = new ReflectionTestClass();
+		String privateFieldValue = (String) ReflectionUtils.getPrivateField(myinstance, "myField");
+		log.info("privateField (1): " + privateFieldValue);
+
+		ReflectionUtils.setPrivateField(myinstance, "myField", "Hello!");
+		privateFieldValue = (String) ReflectionUtils.getPrivateField(myinstance, "myField");
+		log.info("privateField (2): " + privateFieldValue);
+
 	}
 
 
@@ -93,12 +101,6 @@ public class SpringBootJwtApplication implements CommandLineRunner {
 		textEncryptor.setPassword("mySecretEncriptionKeyBlaBla1234");
 		return textEncryptor;
 	}
-
-	/*@Bean
-	public FixedStringSaltGenerator textEncryptor(){
-		FixedStringSaltGenerator textEncryptor = new FixedStringSaltGenerator();
-		return textEncryptor;
-	}*/
 
 
 }

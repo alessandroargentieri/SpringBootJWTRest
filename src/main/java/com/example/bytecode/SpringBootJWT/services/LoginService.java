@@ -14,16 +14,16 @@ public interface LoginService {
 
     /**
      * this method calls the UserDao to get the user having his/her username
-     * @param username
+     * @param id
      * @return
      */
-    Optional<User> getUserFromDbAndVerifyPassword(String username, String password)throws UserNotLoggedException;
+    Optional<User> getUserFromDbAndVerifyPassword(String id, String password)throws UserNotLoggedException;
 
     /**
      * this method gets the credentials of the user and returns the token
      * @return jwt
      */
-    String createJwt(String subject, String name, String permission)  throws java.io.UnsupportedEncodingException;
+    String createJwt(String subject, String name, String permission, Date date)  throws java.io.UnsupportedEncodingException;
 
     /**
      * this method gets the Token and returns User data
@@ -31,10 +31,5 @@ public interface LoginService {
      */
     Map<String, Object> verifyJwtAndGetData(HttpServletRequest request) throws java.io.UnsupportedEncodingException, ExpiredJwtException, UserNotLoggedException;
 
-    /**
-     * this method returns the User found in the DB given it's username
-     * @param username
-     * @return
-     */
-   // User findUserByUsername(String username);
+
 }

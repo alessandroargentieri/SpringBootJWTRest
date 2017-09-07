@@ -35,7 +35,7 @@ public class User implements Serializable{   //Note that for JPA must implement 
 
     @Getter @Setter                 //for lombok
     @NotEmpty @NotBlank @NotNull    //for JSR-303 validation
-    @Column(name="PERMISSION")              //for JPA
+    @Column(name="PERMISSION")      //for JPA
     private String permission;
 
     public User() { }

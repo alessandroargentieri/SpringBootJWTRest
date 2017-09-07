@@ -31,7 +31,7 @@ public class Operation  implements Serializable {   //Note that for JPA must imp
     private String description;
 
     @Getter @Setter                 //for lombok
-    @Column(name="VALUE")     //for JPA
+    @Column(name="VALUE")           //for JPA
     private Double value;
 
 
@@ -40,8 +40,8 @@ public class Operation  implements Serializable {   //Note that for JPA must imp
     @Column(name="FK_ACCOUNT1")     //for JPA
     private String fkAccount1;
 
-    @Getter @Setter             //for lombok
-    @Column(name="FK_ACCOUNT2") //for JPA
+    @Getter @Setter                 //for lombok
+    @Column(name="FK_ACCOUNT2")     //for JPA
     private String fkAccount2;
 
     @PrePersist
