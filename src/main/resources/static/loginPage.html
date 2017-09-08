@@ -21,12 +21,14 @@
     </div>
     <div id="operation_section">
 
-        <p align="right"><a id="logout">Logout</a></p>
+        <a id="logout" style="float: right">Logout</a>
         <h2><b>You're logged in!</b></h2>
         <hr align=”left” size=”1″ width=”300″ color=”red” noshade/>
         <button id="getAccounts">GET YOUR ACCOUNTS</button>
         <br /><br />
         <ul id="accountsList"></ul>
+        <br /><br />
+        <ul id="operationsList"></ul>
 
     </div>
 
@@ -67,6 +69,7 @@
             e.preventDefault();
             document.cookie = "jwt=;expires=Thu, 01 Jan 1970 00:00:01 GMT;";
             $("#accountsList").empty();
+            $("#operationsList").empty();
             $("#login_section").show();
             $("#operation_section").hide();
             alert("You're logged out!");
@@ -81,8 +84,9 @@
                success: function (data, status, xhr) {
                   console.log(data);
                   $("#accountsList").empty();
+                  $("#operationsList").empty();
                   jQuery.each(data.response, function(i, val) {
-                     $("#accountsList").append("<li><b>" + val.id+ "</b></li>");
+                     $("#accountsList").append("<li><h3><a id='" + val.id + "' class='accountButton' title='Go to operations'>" + val.id+ "</a></h3></li>");
                   });
                },
                error: function(result) {
@@ -91,6 +95,32 @@
                }
             });
         });
+
+
+
+        $(document).on('click', '.accountButton', function (e) {
+            //alert(e.target.id);
+            e.preventDefault();
+            $.ajax({
+               url: 'http://localhost:8091//operations/account/' + e.target.id,
+               type: "GET",
+               success: function (data, status, xhr) {
+                  console.log(data);
+                  $("#operationsList").empty();
+                  jQuery.each(data.response, function(i, val) {
+                     $("#operationsList").append("<li><h4><a>Codice operazione: " + val.id + "</a></h3></li>");
+                  });
+               },
+               error: function(result) {
+                  alert("Error!");
+                  console.log(result);
+               }
+            });
+
+        });
+
+
+
 
     </script>
 </body>

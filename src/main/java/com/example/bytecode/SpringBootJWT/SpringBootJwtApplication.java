@@ -80,6 +80,10 @@ public class SpringBootJwtApplication implements CommandLineRunner {
 		operationDao.save(new Operation("3460",new Date(),"Bonifico bancario", 100.00, "cn2874da2","cn4563df3"));
 		operationDao.save(new Operation("3461",new Date(),"Bonifico bancario", 100.00, "cn4563df3","cn2874da2"));
 		operationDao.save(new Operation("3462",new Date(),"Bonifico bancario", 100.00, "cn4563df3","cn4563df3"));
+		operationDao.save(new Operation("3463",new Date(),"Postagiro", 230.00, "cn7256su9","cn2759ds4"));
+		operationDao.save(new Operation("3464",new Date(),"Vaglia postale", 172.00, "cn4563df3","cn7256su9"));
+		operationDao.save(new Operation("3465",new Date(),"Acquisto azioni", -3400.00, "cn7256su9",""));
+
 
 		ReflectionTestClass myinstance = new ReflectionTestClass();
 		String privateFieldValue = (String) ReflectionUtils.getPrivateField(myinstance, "myField");
