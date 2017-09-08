@@ -21,12 +21,18 @@
     </div>
     <div id="operation_section">
 
-        <p align="right"><a>Logout</a></p>
+        <p align="right"><a id="logout">Logout</a></p>
         <h2><b>You're logged in!</b></h2>
+        <hr align=”left” size=”1″ width=”300″ color=”red” noshade/>
+        <button id="getAccounts">GET YOUR ACCOUNTS</button>
+        <br /><br />
+        <ul id="accountsList"></ul>
+
     </div>
 
     <script>
         $(document).ready(function(){
+            $("#login_section").show();
             $("#operation_section").hide();
         });
 
@@ -41,20 +47,51 @@
                   id: $("#id").val(),
                   password: $("#password").val()
                },
-               success: function (data) {
+               success: function (data, status, xhr) {
                   $("#login_section").hide();
                   $("#operation_section").show();
                   console.log(data);
-                  //alert(data.ResponseText.server);
-                  //alert("tu vo fa lamericano");
+                  document.cookie = "jwt=" + xhr.getResponseHeader("jwt");
+
                },
                error: function(result) {
-                  alert("erroraccio");
-                  alert(result.responseText);
+                  alert("Error!");
                   console.log(result);
                }
             });
         });
+
+
+        //logout function
+        $("#logout").click(function(e) {
+            e.preventDefault();
+            document.cookie = "jwt=;expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+            $("#accountsList").empty();
+            $("#login_section").show();
+            $("#operation_section").hide();
+            alert("You're logged out!");
+        });
+
+        //getAllAccounts
+        $("#getAccounts").click(function(e) {
+            e.preventDefault();
+            $.ajax({
+               url: 'http://localhost:8091/accounts/user',
+               type: "POST",
+               success: function (data, status, xhr) {
+                  console.log(data);
+                  $("#accountsList").empty();
+                  jQuery.each(data.response, function(i, val) {
+                     $("#accountsList").append("<li><b>" + val.id+ "</b></li>");
+                  });
+               },
+               error: function(result) {
+                  alert("Error!");
+                  console.log(result);
+               }
+            });
+        });
+
     </script>
 </body>
 </html>
