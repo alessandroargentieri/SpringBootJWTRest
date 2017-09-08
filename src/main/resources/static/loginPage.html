@@ -28,6 +28,7 @@
         <br /><br />
         <ul id="accountsList"></ul>
         <br /><br />
+        <h3 id="operationsTitle"></h3>
         <ul id="operationsList"></ul>
 
     </div>
@@ -69,6 +70,7 @@
             e.preventDefault();
             document.cookie = "jwt=;expires=Thu, 01 Jan 1970 00:00:01 GMT;";
             $("#accountsList").empty();
+            $("#operationsTitle").empty();
             $("#operationsList").empty();
             $("#login_section").show();
             $("#operation_section").hide();
@@ -84,9 +86,10 @@
                success: function (data, status, xhr) {
                   console.log(data);
                   $("#accountsList").empty();
+                  $("#operationsTitle").empty();
                   $("#operationsList").empty();
                   jQuery.each(data.response, function(i, val) {
-                     $("#accountsList").append("<li><h3><a id='" + val.id + "' class='accountButton' title='Go to operations'>" + val.id+ "</a></h3></li>");
+                     $("#accountsList").append("<li><h3><a id='" + val.id + "' class='accountButton' title='Go to operations'>Account " + val.id+ "</a></h3></li>");
                   });
                },
                error: function(result) {
@@ -101,6 +104,7 @@
         $(document).on('click', '.accountButton', function (e) {
             //alert(e.target.id);
             e.preventDefault();
+            $("#operationsTitle").text("Operations for account number " + e.target.id);
             $.ajax({
                url: 'http://localhost:8091//operations/account/' + e.target.id,
                type: "GET",
