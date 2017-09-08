@@ -45,14 +45,14 @@ public class RestController {
 
     /**
      * return a JSON message with the session token and the message of success
-     * @param username passed as Request Param via POST form submit
+     * @param id passed as Request Param via POST form submit
      * @param pwd      passed as Request Param via POST form submit
      * @return ResponseEntity with jwt and message
      */
     @RequestMapping(value = "/login", method = POST)
-    public ResponseEntity<Object> loginUser(@RequestParam(value ="username") String username, @RequestParam(value="password") String pwd){
+    public ResponseEntity<Object> loginUser(@RequestParam(value ="id") String id, @RequestParam(value="password") String pwd){
         try {
-            Optional<User> userr = loginService.getUserFromDbAndVerifyPassword(username, pwd);      //verify the presence into the database
+            Optional<User> userr = loginService.getUserFromDbAndVerifyPassword(id, pwd);      //verify the presence into the database
             if (userr.isPresent()) {
                 User user = userr.get();                                  //get the User from the optional got from the DB
                 String jwt = loginService.createJwt(user.getId(), user.getUsername(), user.getPermission(), new Date());

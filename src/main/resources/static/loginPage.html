@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.sstatic.net/Sites/stackoverflow/all.css?v=5df92b6be7e1"/>
+    <!-- address: http://localhost:8091/loginPage.html-->
+</head>
+<body style="margin: 20px">
+    <div id="login_section">
+        <h2><b>Login</b></h2>
+        <hr align=”left” size=”1″ width=”300″ color=”red” noshade/>
+        <form>
+            USER ID CODE:<br />
+            <input type="text" id="id" /><br />
+            PASSWORD:<br />
+            <input type="password" id="password" /><br />
+        </form>
+        <button id="submit">SUBMIT</button>
+    </div>
+    <div id="operation_section">
+
+        <p align="right"><a>Logout</a></p>
+        <h2><b>You're logged in!</b></h2>
+    </div>
+
+    <script>
+        $(document).ready(function(){
+            $("#operation_section").hide();
+        });
+
+        //login submit function
+        $("#submit").click(function(e) {
+            e.preventDefault();
+            $.ajax({
+               url: 'http://localhost:8091/login',
+               type: "POST",
+               // dataType: 'jsonp',
+               data: {
+                  id: $("#id").val(),
+                  password: $("#password").val()
+               },
+               success: function (data) {
+                  $("#login_section").hide();
+                  $("#operation_section").show();
+                  console.log(data);
+                  //alert(data.ResponseText.server);
+                  //alert("tu vo fa lamericano");
+               },
+               error: function(result) {
+                  alert("erroraccio");
+                  alert(result.responseText);
+                  console.log(result);
+               }
+            });
+        });
+    </script>
+</body>
+</html>
